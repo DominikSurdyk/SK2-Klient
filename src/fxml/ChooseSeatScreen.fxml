@@ -5,15 +5,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ChooseSeatScreenController">
    <children>
-      <Button fx:id="button1_1" layoutX="289.0" layoutY="131.0" mnemonicParsing="false" text="Gracz 1" />
-      <Button fx:id="button1_2" layoutX="443.0" layoutY="131.0" mnemonicParsing="false" text="Gracz 2" />
-      <Button fx:id="button2_1" layoutX="289.0" layoutY="387.0" mnemonicParsing="false" text="Gracz 1" />
-      <Button fx:id="button2_2" layoutX="443.0" layoutY="387.0" mnemonicParsing="false" text="Gracz 2" />
-      <Button fx:id="button3_1" layoutX="289.0" layoutY="618.0" mnemonicParsing="false" text="Gracz 1" />
-      <Button fx:id="button3_2" layoutX="443.0" layoutY="618.0" mnemonicParsing="false" text="Gracz 2" />
+      <Button fx:id="button1_1" disable="true" layoutX="289.0" layoutY="131.0" mnemonicParsing="false" onAction="#button1_1Action" text="Gracz 1" />
+      <Button fx:id="button1_2" disable="true" layoutX="443.0" layoutY="131.0" mnemonicParsing="false" onAction="#button1_2Action" text="Gracz 2" />
+      <Button fx:id="button2_1" disable="true" layoutX="289.0" layoutY="387.0" mnemonicParsing="false" onAction="#button2_1Action" text="Gracz 1" />
+      <Button fx:id="button2_2" disable="true" layoutX="443.0" layoutY="387.0" mnemonicParsing="false" onAction="#button2_2Action" text="Gracz 2" />
+      <Button fx:id="button3_1" disable="true" layoutX="289.0" layoutY="618.0" mnemonicParsing="false" onAction="#button3_1Action" text="Gracz 1" />
+      <Button fx:id="button3_2" disable="true" layoutX="443.0" layoutY="618.0" mnemonicParsing="false" onAction="#button3_2Action" text="Gracz 2" />
       <Label layoutX="357.0" layoutY="70.0" text="Stół 1">
          <font>
             <Font size="30.0" />
@@ -29,5 +28,6 @@
             <Font size="30.0" />
          </font>
       </Label>
+      <Label fx:id="messageLabel" layoutX="382.0" layoutY="40.0" />
    </children>
 </Pane>

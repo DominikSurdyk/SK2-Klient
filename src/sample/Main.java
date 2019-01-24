@@ -25,22 +25,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-//        Connection connection = new Connection();
-//        connection.writeData("tescik\ntescik2");
-//        try {
-//            TimeUnit.SECONDS.sleep(5);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-
-
-
-
-        // connection.closeConnection();
-//        System.out.println(connection.readData());
-//        System.out.println("koniec");
     }
 }
