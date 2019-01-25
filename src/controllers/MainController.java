@@ -1,5 +1,6 @@
 package controllers;
 
+import engine.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -12,18 +13,19 @@ public class MainController {
     private StackPane mainStackPane;
 
 
-    public MainController(){
+    public MainController() {
         System.out.println("Odpalam program");
     }
-    public void initialize(){
+
+    public void initialize() {
         setConnectionScreen();
 
     }
 
     //ustawianei ekranu menu
-    public void setConnectionScreen(){
+    public void setConnectionScreen() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../fxml/ConnectionScreen.fxml"));
-        Pane pane =null;
+        Pane pane = null;
         try {
             pane = loader.load();
         } catch (IOException e) {
@@ -35,7 +37,7 @@ public class MainController {
         mainStackPane.getChildren().add(pane);
     }
 
-    public void setPane(Pane pane){
+    public void setPane(Pane pane) {
         mainStackPane.getChildren().clear();
         mainStackPane.getChildren().add(pane);
     }

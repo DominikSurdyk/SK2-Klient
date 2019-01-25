@@ -1,9 +1,13 @@
 package connection;
 
+import engine.Game;
+
 import java.io.*;
 import java.net.Socket;
 
 public class Connection {
+
+    private Game game;
 
     private static String SERVER_IP_ADDRESS_DEFAULT = "localhost";
     private static int SERVER_PORT_DEFAULT = 1234;
