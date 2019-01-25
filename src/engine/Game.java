@@ -24,11 +24,13 @@ public class Game {
     public List<Point> oldMoves = new LinkedList<>();
     public List<Point> newMoves = new LinkedList<>();
     private Point currentPosition = new Point(4, 6);
-    public int gameSeatNo;
+    private int gameSeatNo;
+    private int gameNo;
     private boolean myTurn;
 
-    public Game(int gameSeatNo, boolean makeFirstMove) {
-        this.gameSeatNo = gameSeatNo;
+    public Game(int gameNo,int gameSeatNo, boolean makeFirstMove) {
+        this.setGameNo(gameNo);
+        this.setGameSeatNo(gameSeatNo);
         prepareAllowedMovesToGame(makeFirstMove);
         System.out.println("Stworzono model gry!");
     }
@@ -111,8 +113,8 @@ public class Game {
     }
 
     public static int getMoveDirectionBetweenTwoPoints(Point start, Point end) {
-        int deltaX = start.getX() - end.getX();
-        int deltaY = start.getY() - end.getY();
+        int deltaX = end.getX() - start.getX();
+        int deltaY = end.getY() - start.getY();
 
         int result = -1;
         if ((abs(deltaX) > 1) || (abs(deltaY)) > 1 || (deltaX == 0 && deltaY == 0)) {
@@ -159,7 +161,7 @@ public class Game {
             allowedMovesDirections.direction[p] = allowedMoves[x][y][p];
             if (allowedMoves[x][y][p]) {
 
-                System.out.println("mozliwy kierunek ruchu: " + p);
+                //System.out.println("mozliwy kierunek ruchu: " + p);
             }
         }
         return allowedMovesDirections;
@@ -208,23 +210,24 @@ public class Game {
         setMovePermission(lastPoint, direction, false);
         setMovePermission(point, oppositeDirection, false);
 
-
-        System.out.print("Punkt: " + lastPoint.getX() + "," + lastPoint.getY() + " kierunki: ");
+        if ((!amILoose() || !amIWin() || !amIStuck()) && isPossibleToBounce()){
+            myTurn = true;
+        }else{
+            myTurn = false;
+        }
+        System.out.print("Poprzedni Punkt: " + lastPoint.getX() + "," + lastPoint.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
         for (int p = 0; p < 8; p++) {
             if (allowedMoves[lastPoint.getX()][lastPoint.getY()][p]) {
                 System.out.print(p + " ");
             }
         }
         System.out.print("\n");
-        System.out.print("Punkt: " + point.getX() + "," + point.getY() + " kierunki: ");
+        System.out.print("Nowy Punkt: " + point.getX() + "," + point.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
         for (int p = 0; p < 8; p++) {
             if (allowedMoves[point.getX()][point.getY()][p]) {
                 System.out.print(p + " ");
             }
         }
-        System.out.print("\n");
-        System.out.println(lastPoint.getX() + "," + lastPoint.getY() + " kierunek: " + direction);
-        System.out.print("aktualna pozycja : " + currentPosition.getX() + "," + currentPosition.getY());
     }
 
     public void executeMove(int direction) {
@@ -298,25 +301,62 @@ public class Game {
 
     public boolean amIWin() {
         boolean result = false;
-        if (gameSeatNo == 0) {
-            result = 0 == isSomeoneWin();
+        if (getGameSeatNo() == 0) {
+            result = (0 == isSomeoneWin());
         }
 
-        if (gameSeatNo == 1) {
-            result = 1 == isSomeoneWin();
+        if (getGameSeatNo() == 1) {
+            result = (1 == isSomeoneWin());
         }
         return result;
     }
 
     public boolean amILoose() {
         boolean result = false;
-        if (gameSeatNo == 0) {
+        if (getGameSeatNo() == 0) {
             result = 1 == isSomeoneWin();
         }
 
-        if (gameSeatNo == 1) {
+        if (getGameSeatNo() == 1) {
             result = 0 == isSomeoneWin();
         }
         return result;
+    }
+
+    public String getNewMovesAsDirections(){
+        StringBuilder responseBuilder = new StringBuilder();
+        Point lastPoint = oldMoves.get(oldMoves.size()-1);
+        Point newPoint = newMoves.get(0);
+
+        int direction = getMoveDirectionBetweenTwoPoints(lastPoint,newPoint);
+
+        responseBuilder.append(direction);
+
+        if (newMoves.size() > 1){
+            for (int i = 1; i < newMoves.size(); i++){
+                lastPoint = newMoves.get(i-1);
+                newPoint = newMoves.get(i);
+                direction = getMoveDirectionBetweenTwoPoints(lastPoint,newPoint);
+                responseBuilder.append(direction);
+            }
+        }
+        return responseBuilder.toString();
+
+    }
+
+    public int getGameSeatNo() {
+        return gameSeatNo;
+    }
+
+    public void setGameSeatNo(int gameSeatNo) {
+        this.gameSeatNo = gameSeatNo;
+    }
+
+    public int getGameNo() {
+        return gameNo;
+    }
+
+    public void setGameNo(int gameNo) {
+        this.gameNo = gameNo;
     }
 }

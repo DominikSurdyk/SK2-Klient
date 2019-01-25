@@ -63,16 +63,27 @@ public class ChooseSeatScreenController {
         if (!"fail".equals(response)) {
             System.out.println("status-x(x: 1 - zaczynaj, 0 - czekaj): " + response);
             String[] tokens = response.split("-");
-            boolean makeFirstMove = (1 == Integer.parseInt(tokens[1]));
-            openGameScreen(seatNumber % 2, makeFirstMove);
+            if("3".equals(tokens[0])){
+                char seatStatus;
+                for (int i = 0; i < PLAYER_SEATS; i++) {
+                    seatStatus = tokens[1].charAt(i);
+                    seatStatusArray[i] = Character.getNumericValue(seatStatus);
+                }
+                messageLabel.setText("NIESTETY KTOŚ WŁAŚNIE ZAJĄŁ TO MIEJSCE. WYBIERZ INNE!");
+                updateSeatStatusArray();
+            }else{
+                boolean makeFirstMove = (1 == Integer.parseInt(tokens[1]));
+                openGameScreen(seatNumber/2,seatNumber % 2, makeFirstMove);
+            }
+
         } else {
             System.out.println("Nie udało się wybrać miejsca. Problem z połączeniem!");
         }
 
     }
 
-    public void openGameScreen(int gameSeatNo, boolean makeFirstMove) {
-        Model.newGame(gameSeatNo, makeFirstMove);
+    public void openGameScreen(int gameNo, int gameSeatNo, boolean makeFirstMove) {
+        Model.newGame(gameNo,gameSeatNo, makeFirstMove);
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../fxml/GameScreen.fxml"));
         Pane pane = null;

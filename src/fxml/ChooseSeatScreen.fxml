@@ -28,6 +28,9 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="messageLabel" layoutX="382.0" layoutY="40.0" />
+      <Label fx:id="messageLabel" layoutX="22.0" layoutY="34.0" prefHeight="36.0" prefWidth="758.0" textFill="RED">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
    </children>
 </Pane>

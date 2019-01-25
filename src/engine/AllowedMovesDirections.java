@@ -14,7 +14,7 @@ public class AllowedMovesDirections {
     }
 
     public void printAllowedDirections(){
-        System.out.print("mozliwe kierunki ruchu w tym punkcie: ");
+        //System.out.print("mozliwe kierunki ruchu w tym punkcie: ");
         for (int p =0 ; p<8 ; p++){
             if(direction[p]){
                 System.out.print(Integer.toString(p) + " ");
@@ -25,11 +25,14 @@ public class AllowedMovesDirections {
 
     public boolean isPossibleToBounce(){
         boolean response = false;
+        int count =0;
         for (int i =0 ; i<8 ; i++){
             if (direction[i] == false){
-                response = true;
-                break;
+                count ++;
             }
+        }
+        if (count>1){
+            response = true;
         }
         return response;
     }
@@ -37,10 +40,10 @@ public class AllowedMovesDirections {
     public boolean amIStuck(){
         int count = 0;
         for (int i =0 ; i<8 ; i++){
-            if (direction[i] == false){
+            if (!direction[i]){
                 count++;
             }
         }
-        return count != 8;
+        return count == 8;
     }
 }

@@ -147,13 +147,40 @@ public class GameScreenController {
         if (!game.newMoves.isEmpty()) {
             Point start = game.oldMoves.get(game.oldMoves.size() - 1);
             Point end = game.newMoves.get(0);
-            drawNewLine(start.getX(), end.getY(), end.getX(), end.getY());
+            drawNewLine(start.getX(), start.getY(), end.getX(), end.getY());
             if (game.newMoves.size() > 1)
                 for (int p = 1; p < game.newMoves.size(); p++) {
                     start = game.newMoves.get(p - 1);
                     end = game.newMoves.get(p);
                     drawNewLine(start.getX(), start.getY(), end.getX(), end.getY());
                 }
+        }
+    }
+
+    public void buttonAction(int direction) {
+        game.executeMove(direction);
+        drawEmptyField();
+        drawOldMoves();
+        drawNewMoves();
+        drawCurrentPosition();
+        refreshBUttons();
+        if (game.amIWin()) {
+            System.out.println("Gratulacje, wygrales!");
+        } else if (game.amILoose() || game.amIStuck()) {
+            System.out.println("Przegrales!");
+        } else if(game.isPossibleToBounce()){
+            System.out.println("Wykonaj nastepny ruch!");
+        } else {
+            System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
+            StringBuilder messageBuilder =
+                    new StringBuilder("3-" +
+                            Connection.getClientId() + "-" +
+                            game.getGameNo() + "-" +
+                            game.getGameSeatNo() + "-" +
+                            game.getNewMovesAsDirections());
+            Connection.writeData(messageBuilder.toString());
+
+            //System.out.println(Connection.readData());
         }
     }
 
@@ -228,16 +255,5 @@ public class GameScreenController {
 
     public void drawUpLeft() {
         buttonAction(7);
-    }
-
-    public void buttonAction(int direction) {
-        game.executeMove(direction);
-        if (game.amIWin()) {
-            System.out.println("Gratulacje, wygrales!");
-        } else if (game.amILoose() || game.amIStuck()) {
-            System.out.println("Przegrales!");
-        } else {
-            System.out.println("Czekasz na kolejny ruch. odczytaj dane");
-        }
     }
 }
