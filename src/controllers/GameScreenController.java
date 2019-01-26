@@ -158,7 +158,7 @@ public class GameScreenController {
     }
 
     public void buttonAction(int direction) {
-        game.executeMove(direction);
+        game.executeMove(direction,true);
         drawEmptyField();
         drawOldMoves();
         drawNewMoves();
@@ -185,7 +185,7 @@ public class GameScreenController {
 
             game.transferNewMovesToOldMoves();
             for (int i =0; i < tokens[2].length();i++){
-                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)));
+                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)),false);
             }
             drawEmptyField();
             drawOldMoves();

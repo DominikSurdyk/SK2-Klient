@@ -232,30 +232,30 @@ public class Game {
 
     }
 
-    public void executeMove(int direction) {
+    public void executeMove(int direction,boolean isThisMyMove) {
         if (direction == 0) {
-            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() - 1));
+            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() - 1),isThisMyMove);
         }
         if (direction == 1) {
-            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() - 1));
+            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() - 1),isThisMyMove);
         }
         if (direction == 2) {
-            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY()));
+            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY()),isThisMyMove);
         }
         if (direction == 3) {
-            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() + 1));
+            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() + 1),isThisMyMove);
         }
         if (direction == 4) {
-            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() + 1));
+            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() + 1),isThisMyMove);
         }
         if (direction == 5) {
-            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() + 1));
+            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() + 1),isThisMyMove);
         }
         if (direction == 6) {
-            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY()));
+            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY()),isThisMyMove);
         }
         if (direction == 7) {
-            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() - 1));
+            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() - 1),isThisMyMove);
         }
     }
 
