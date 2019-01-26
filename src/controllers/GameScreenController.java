@@ -67,6 +67,22 @@ public class GameScreenController {
         drawEmptyField();
         if (!game.isMyTurn()) {
             System.out.println("czekaj aż drugi gracz dolaczy!");
+            String response = Connection.readData();
+            String[] tokens = response.split("-");
+
+            for (int i = 0; i < tokens[2].length(); i++) {
+                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);
+            }
+            drawEmptyField();
+            drawOldMoves();
+            drawCurrentPosition();
+
+            int status = Integer.parseInt(tokens[0]);
+
+            System.out.println("Gra toczy sie dalej");
+            game.setMyTurn(true);
+
+            refreshBUttons();
         } else {
             refreshBUttons();
         }
@@ -158,7 +174,7 @@ public class GameScreenController {
     }
 
     public void buttonAction(int direction) {
-        game.executeMove(direction,true);
+        game.executeMove(direction, true);
         drawEmptyField();
         drawOldMoves();
         drawNewMoves();
@@ -168,7 +184,7 @@ public class GameScreenController {
             System.out.println("Gratulacje, wygrales!");
         } else if (game.amILoose() || game.amIStuck()) {
             System.out.println("Przegrales!");
-        } else if(game.isPossibleToBounce()){
+        } else if (game.isPossibleToBounce()) {
             System.out.println("Wykonaj nastepny ruch!");
         } else {
             System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
@@ -184,21 +200,21 @@ public class GameScreenController {
             String[] tokens = response.split("-");
 
             game.transferNewMovesToOldMoves();
-            for (int i =0; i < tokens[2].length();i++){
-                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)),false);
+            for (int i = 0; i < tokens[2].length(); i++) {
+                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);
             }
             drawEmptyField();
             drawOldMoves();
             drawNewMoves();
             drawCurrentPosition();
             int status = Integer.parseInt(tokens[0]);
-            if (status == -1){
+            if (status == -1) {
                 System.out.println("przegrales gre!");
                 game.setMyTurn(false);
-            }else if (status == 1){
+            } else if (status == 1) {
                 System.out.println("Wygrales gre!");
                 game.setMyTurn(false);
-            }else{
+            } else {
                 System.out.println("Gra toczy sie dalej");
                 game.setMyTurn(true);
             }
