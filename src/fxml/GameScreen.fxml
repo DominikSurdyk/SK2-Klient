@@ -17,7 +17,7 @@
       <Button fx:id="buttonDown" disable="true" layoutX="875.0" layoutY="366.0" mnemonicParsing="false" onAction="#drawDown" text="Dół" />
       <Button fx:id="buttonDownLeft" disable="true" layoutX="790.0" layoutY="366.0" mnemonicParsing="false" onAction="#drawDownLeft" text="Dół-lewo" />
       <Button fx:id="buttonLeft" disable="true" layoutX="790.0" layoutY="304.0" mnemonicParsing="false" onAction="#drawLeft" text="Lewo" />
-      <Label fx:id="messsageLabel" layoutX="784.0" layoutY="148.0" prefHeight="16.0" prefWidth="231.0">
+      <Label fx:id="messageLabel" layoutX="784.0" layoutY="148.0" prefHeight="16.0" prefWidth="231.0">
          <font>
             <Font size="15.0" />
          </font>
