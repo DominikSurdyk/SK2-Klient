@@ -56,6 +56,7 @@ public class Connection {
             InputStream inputStream = clientSocket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String message = reader.readLine();
+            System.out.println("Odebrano dane [" + message + "]");
             return message;
         } catch (IOException e) {
             System.out.println("Nie udało się odczyta danych");
@@ -68,7 +69,7 @@ public class Connection {
         try {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
             writer.println(message.toCharArray());
-            System.out.println("wysłano dane");
+            System.out.println("wysłano dane [" + message + "]");
             return 0;
         } catch (IOException e) {
             System.out.println("Nie udało się wysłać danych");
