@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 
@@ -34,7 +35,8 @@ public class GameScreenController {
     private Button buttonLeft;
     @FXML
     private Button buttonUpLeft;
-
+    @FXML
+    private Label messageLabel;
     //grafika i wymiary
     private GraphicsContext field;
     private final int fieldUnit = 50;
@@ -69,6 +71,7 @@ public class GameScreenController {
         drawOldMoves();
         drawCurrentPosition();
         if (!game.isMyTurn()) {
+            setmessageLabelOpponentTurn();
             System.out.println("czekaj aż drugi gracz dolaczy!");
             String response = Connection.readData();
             String[] tokens = response.split("-");
@@ -88,6 +91,7 @@ public class GameScreenController {
 
             refreshBUttons();
         } else {
+            setmessageLabelMyTurn();
             refreshBUttons();
         }
 
@@ -191,6 +195,7 @@ public class GameScreenController {
         } else if (game.isPossibleToBounce()) {
             System.out.println("Wykonaj nastepny ruch!");
         } else {
+            setmessageLabelOpponentTurn();
             System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
             StringBuilder messageBuilder =
                     new StringBuilder("3-" +
@@ -200,6 +205,8 @@ public class GameScreenController {
                             game.getNewMovesAsDirections());
             Connection.writeData(messageBuilder.toString());
 
+
+            //odpowiedz
             String response = Connection.readData();
             String[] tokens = response.split("-");
 
@@ -222,6 +229,7 @@ public class GameScreenController {
                 game.setMyTurn(false);
             } else {
                 System.out.println("Gra toczy sie dalej");
+                setmessageLabelMyTurn();
                 game.setMyTurn(true);
             }
             refreshBUttons();
@@ -299,5 +307,13 @@ public class GameScreenController {
 
     public void drawUpLeft() {
         buttonAction(7);
+    }
+
+    public void setmessageLabelMyTurn(){
+        messageLabel.setText("Twój ruch!");
+    }
+
+    public void setmessageLabelOpponentTurn(){
+        messageLabel.setText("Przeciwnik wykonuje swój ruch!");
     }
 }
