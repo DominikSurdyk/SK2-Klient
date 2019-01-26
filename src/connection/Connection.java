@@ -51,28 +51,26 @@ public class Connection {
     }
 
     public static String readData() {
-
+        StringBuilder stringBuilder = new StringBuilder();
+        Thread thread = new Thread(new ConnectionReadCommand(stringBuilder,clientSocket));
+        thread.start();
         try {
-            InputStream inputStream = clientSocket.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String message = reader.readLine();
-            System.out.println("Odebrano dane [" + message + "]");
-            return message;
-        } catch (IOException e) {
-            System.out.println("Nie udało się odczyta danych");
-            return "fail";
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("Błąd w wątku");
         }
-
+        return stringBuilder.toString();
     }
 
     public static int writeData(String message) {
+        Thread thread = new Thread(new ConnectionWriteCommand(clientSocket,message));
+        thread.start();
         try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            writer.println(message.toCharArray());
-            System.out.println("wysłano dane [" + message + "]");
+            thread.join();
             return 0;
-        } catch (IOException e) {
-            System.out.println("Nie udało się wysłać danych");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
             return -1;
         }
     }
