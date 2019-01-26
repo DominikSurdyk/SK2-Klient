@@ -65,6 +65,9 @@ public class GameScreenController {
         this.game = Model.getGame();
         field = canvas.getGraphicsContext2D();
         drawEmptyField();
+        refreshBUttons();
+        drawOldMoves();
+        drawCurrentPosition();
         if (!game.isMyTurn()) {
             System.out.println("czekaj aż drugi gracz dolaczy!");
             String response = Connection.readData();
@@ -80,7 +83,7 @@ public class GameScreenController {
 
             int status = Integer.parseInt(tokens[0]);
 
-            System.out.println("Gra toczy sie dalej");
+            System.out.println("Gra Twoja kolej!");
             game.setMyTurn(true);
 
             refreshBUttons();
@@ -204,6 +207,8 @@ public class GameScreenController {
             for (int i = 0; i < tokens[2].length(); i++) {
                 game.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);
             }
+            game.transferNewMovesToOldMoves();
+
             drawEmptyField();
             drawOldMoves();
             drawNewMoves();
