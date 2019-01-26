@@ -73,6 +73,7 @@ public class GameScreenController {
             for (int i = 0; i < tokens[2].length(); i++) {
                 game.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);
             }
+            game.transferNewMovesToOldMoves();
             drawEmptyField();
             drawOldMoves();
             drawCurrentPosition();
