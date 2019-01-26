@@ -193,7 +193,7 @@ public class Game {
     }
 
 
-    public void addNewMove(Point point) {
+    public void addNewMove(Point point,boolean isThisMyMove) {
         int direction;
         int oppositeDirection;
         Point lastPoint;
@@ -209,25 +209,27 @@ public class Game {
 
         setMovePermission(lastPoint, direction, false);
         setMovePermission(point, oppositeDirection, false);
+        if (isThisMyMove){
+            if ((!amILoose() || !amIWin() || !amIStuck()) && isPossibleToBounce()){
+                myTurn = true;
+            }else{
+                myTurn = false;
+            }
+            System.out.print("Poprzedni Punkt: " + lastPoint.getX() + "," + lastPoint.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
+            for (int p = 0; p < 8; p++) {
+                if (allowedMoves[lastPoint.getX()][lastPoint.getY()][p]) {
+                    System.out.print(p + " ");
+                }
+            }
+            System.out.print("\n");
+            System.out.print("Nowy Punkt: " + point.getX() + "," + point.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
+            for (int p = 0; p < 8; p++) {
+                if (allowedMoves[point.getX()][point.getY()][p]) {
+                    System.out.print(p + " ");
+                }
+            }
+        }
 
-        if ((!amILoose() || !amIWin() || !amIStuck()) && isPossibleToBounce()){
-            myTurn = true;
-        }else{
-            myTurn = false;
-        }
-        System.out.print("Poprzedni Punkt: " + lastPoint.getX() + "," + lastPoint.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
-        for (int p = 0; p < 8; p++) {
-            if (allowedMoves[lastPoint.getX()][lastPoint.getY()][p]) {
-                System.out.print(p + " ");
-            }
-        }
-        System.out.print("\n");
-        System.out.print("Nowy Punkt: " + point.getX() + "," + point.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
-        for (int p = 0; p < 8; p++) {
-            if (allowedMoves[point.getX()][point.getY()][p]) {
-                System.out.print(p + " ");
-            }
-        }
     }
 
     public void executeMove(int direction) {
@@ -358,5 +360,12 @@ public class Game {
 
     public void setGameNo(int gameNo) {
         this.gameNo = gameNo;
+    }
+
+    public void transferNewMovesToOldMoves(){
+        for (Point point: newMoves) {
+            addOldMove(point);
+        }
+        newMoves.clear();
     }
 }

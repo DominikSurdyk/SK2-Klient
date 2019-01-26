@@ -180,7 +180,29 @@ public class GameScreenController {
                             game.getNewMovesAsDirections());
             Connection.writeData(messageBuilder.toString());
 
-            //System.out.println(Connection.readData());
+            String response = Connection.readData();
+            String[] tokens = response.split("-");
+
+            game.transferNewMovesToOldMoves();
+            for (int i =0; i < tokens[2].length();i++){
+                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)));
+            }
+            drawEmptyField();
+            drawOldMoves();
+            drawNewMoves();
+            drawCurrentPosition();
+            int status = Integer.parseInt(tokens[0]);
+            if (status == -1){
+                System.out.println("przegrales gre!");
+                game.setMyTurn(false);
+            }else if (status == 1){
+                System.out.println("Wygrales gre!");
+                game.setMyTurn(false);
+            }else{
+                System.out.println("Gra toczy sie dalej");
+                game.setMyTurn(true);
+            }
+            refreshBUttons();
         }
     }
 
