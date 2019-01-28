@@ -32,13 +32,17 @@ public class ConnectionReadMovesCommand implements Runnable {
             gameReference.transferNewMovesToOldMoves();
 
             //tutaj testwow w tym momencie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! trzeba ustandaryzowac metode!
-
-            int status = Integer.parseInt(tokens[1]);
-            System.out.println("Status gry: "+ status + "[0]-graj dalej, [-1] - przegrales, [1]-wygrales");
-            if (status == -1) {
+            int responseStatus = Integer.parseInt(tokens[0]);
+            if (responseStatus == 0){
+                System.out.println("Przeiciwnik sie rozlaczyl. Wygrales!");
+                gameReference.setMyTurn(false);
+            }
+            int gameStatus = Integer.parseInt(tokens[1]);
+            System.out.println("Status gry: "+ gameStatus + "[0]-graj dalej, [1] - wygrales, [2]-przegrales");
+            if (gameStatus == -1) {
                 System.out.println("przegrales gre!");
                 gameReference.setMyTurn(false);
-            } else if (status == 1) {
+            } else if (gameStatus == 1) {
                 System.out.println("Wygrales gre!");
                 gameReference.setMyTurn(false);
             } else {
