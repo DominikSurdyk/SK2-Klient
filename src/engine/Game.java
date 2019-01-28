@@ -173,10 +173,6 @@ public class Game {
         int y = getCurrentPosition().getY();
         for (int p = 0; p < 8; p++) {
             allowedMovesDirections.direction[p] = allowedMoves[x][y][p];
-            if (allowedMoves[x][y][p]) {
-
-                //System.out.println("mozliwy kierunek ruchu: " + p);
-            }
         }
         return allowedMovesDirections;
     }
@@ -243,6 +239,7 @@ public class Game {
                     System.out.print(p + " ");
                 }
             }
+            System.out.print("\n");
         }
 
     }
@@ -288,10 +285,6 @@ public class Game {
         } else {
             currentPosition = newMoves.get(newMoves.size() - 1);
         }
-    }
-
-    public void deleteNewMoves() {
-        newMoves.clear();
     }
 
     //0 - wygral gracz z miejsca 0. 1 - wygral gracz z miejsca 1. -1  - nikt nie wygral

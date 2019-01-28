@@ -1,4 +1,6 @@
-package controllers;
+package controllers.GuiCommands;
+
+import controllers.GameScreenController;
 
 public class DrawOpponentMoves implements Runnable {
 
@@ -10,7 +12,6 @@ public class DrawOpponentMoves implements Runnable {
         gameScreenControllerReference.drawOldMoves();
         gameScreenControllerReference.drawCurrentPosition();
         gameScreenControllerReference.refreshBUttons();
-
     }
 
     public DrawOpponentMoves(GameScreenController gameScreenControllerReference) {

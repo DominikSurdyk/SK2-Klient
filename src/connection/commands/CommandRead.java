@@ -1,4 +1,4 @@
-package connection;
+package connection.commands;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ConnectionReadCommand implements Runnable {
+public class CommandRead implements Runnable {
     StringBuilder message;
     Socket clientSocket;
 
@@ -19,11 +19,11 @@ public class ConnectionReadCommand implements Runnable {
             System.out.println("Odebrano dane [" + response + "]");
             message.append(response);
         } catch (IOException e) {
-            System.out.println("Nie udało się odczyta danych");
+            System.out.println("Nie udało się odczytac danych");
         }
     }
 
-    public ConnectionReadCommand(StringBuilder message, Socket clientSocket) {
+    public CommandRead(StringBuilder message, Socket clientSocket) {
         this.message = message;
         this.clientSocket = clientSocket;
     }

@@ -1,4 +1,4 @@
-package sample;
+package main;
 
 import connection.Connection;
 import javafx.application.Application;
@@ -12,15 +12,12 @@ public class Main extends Application {
     Connection connection;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/MainScreen.fxml"));
         primaryStage.setTitle("Pilka nozna");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
-
-
     }
 
     public static void main(String[] args) {

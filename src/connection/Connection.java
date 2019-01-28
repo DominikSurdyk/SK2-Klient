@@ -1,5 +1,8 @@
 package connection;
 
+import connection.commands.CommandRead;
+import connection.commands.CommandReadResponseFromServer;
+import connection.commands.CommandWrite;
 import controllers.GameScreenController;
 import engine.Game;
 
@@ -18,12 +21,10 @@ public class Connection {
     public static Thread myThread;
     public static StringBuilder stringBuilderOut;
 
-
     public Connection() {
     }
 
     private static void connect() throws IOException {
-
         clientSocket = new Socket(SERVER_IP_ADDRESS_DEFAULT, SERVER_PORT_DEFAULT);
     }
 
@@ -41,7 +42,6 @@ public class Connection {
     }
 
     public static int connect(String serverIpAddress, int serverPort) {
-
         try {
             setConfiguration(serverIpAddress, serverPort);
             connect();
@@ -55,18 +55,17 @@ public class Connection {
 
     public static void  readData() {
         stringBuilderOut= new StringBuilder();
-        myThread= new Thread(new ConnectionReadCommand(stringBuilderOut,clientSocket));
+        myThread= new Thread(new CommandRead(stringBuilderOut,clientSocket));
         myThread.start();
-
     }
 
     public static void writeData(String message) {
-        myThread= new Thread(new ConnectionWriteCommand(clientSocket,message));
+        myThread= new Thread(new CommandWrite(clientSocket,message));
         myThread.start();
     }
 
     public static void readMoves(Game gameReference ,GameScreenController gameScreenControllerReference){
-        myThread = new Thread(new ConnectionReadMovesCommand(clientSocket,gameReference,gameScreenControllerReference));
+        myThread = new Thread(new CommandReadResponseFromServer(clientSocket,gameReference,gameScreenControllerReference));
         myThread.start();
     }
 

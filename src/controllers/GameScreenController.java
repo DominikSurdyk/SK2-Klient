@@ -169,15 +169,15 @@ public class GameScreenController {
         drawCurrentPosition();
         refreshBUttons();
         if (game.amIWin()) {
-            System.out.println("Gratulacje, wygrales!");
+            System.out.println("Gratulacje, wygrałes!");
             setMessageLabelIWin();
             refreshBUttons();
         } else if (game.amILoose() || game.amIStuck()) {
-            System.out.println("Przegrales!");
+            System.out.println("Przegrałes!");
             setMessageLabelILoose();
             refreshBUttons();
         } else if (game.isPossibleToBounce()) {
-            System.out.println("Wykonaj nastepny ruch!");
+            System.out.println("Wykonaj następny ruch!");
         } else {
             setmessageLabelOpponentTurn();
             System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");

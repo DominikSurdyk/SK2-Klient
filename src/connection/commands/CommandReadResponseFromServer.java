@@ -1,7 +1,7 @@
-package connection;
+package connection.commands;
 
 import controllers.GameScreenController;
-import controllers.DrawOpponentMoves;
+import controllers.GuiCommands.DrawOpponentMoves;
 import engine.Game;
 import javafx.application.Platform;
 
@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ConnectionReadMovesCommand implements Runnable {
+public class CommandReadResponseFromServer implements Runnable {
     Socket clientSocket;
     GameScreenController gameScreenControllerReference;
     Game gameReference;
@@ -19,18 +19,15 @@ public class ConnectionReadMovesCommand implements Runnable {
     @Override
     public void run() {
         try {
-
             InputStream inputStream = clientSocket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String response = reader.readLine();
             System.out.println("Odebrano dane [" + response + "]");
+
             String[] tokens = response.split("-");
-
-
-            //tutaj testwow w tym momencie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! trzeba ustandaryzowac metode!
             int responseStatus = Integer.parseInt(tokens[0]);
             if (responseStatus == 0) {
-                System.out.println("Przeiciwnik sie rozlaczyl. Wygrales!");
+                System.out.println("Przeciwnik się rozłączył. Wygrałeś");
                 gameReference.setMyTurn(false);
             } else {
                 for (int i = 0; i < tokens[2].length(); i++) {
@@ -38,26 +35,25 @@ public class ConnectionReadMovesCommand implements Runnable {
                 }
                 gameReference.transferNewMovesToOldMoves();
                 int gameStatus = Integer.parseInt(tokens[1]);
-                System.out.println("Status gry: " + gameStatus + "[0]-graj dalej, [1] - wygrales, [2]-przegrales");
+                System.out.println("Status gry: " + gameStatus + ". [0] - graj dalej, [1] - wygrałeś, [2]-przegrałeś");
                 if (gameStatus == -1) {
-                    System.out.println("przegrales gre!");
+                    System.out.println("Przegrałeś!");
                     gameReference.setMyTurn(false);
                 } else if (gameStatus == 1) {
-                    System.out.println("Wygrales gre!");
+                    System.out.println("Wygrałeś");
                     gameReference.setMyTurn(false);
                 } else {
-                    System.out.println("Gra toczy sie dalej");
+                    System.out.println("Gra toczy się dalej!");
                     gameReference.setMyTurn(true);
                 }
                 Platform.runLater(new DrawOpponentMoves(this.gameScreenControllerReference));
             }
-
         } catch (IOException e) {
             System.out.println("Nie udało się odczyta danych");
         }
     }
 
-    public ConnectionReadMovesCommand(Socket clientSocket, Game gameReference, GameScreenController gameScreenControllerReference) {
+    public CommandReadResponseFromServer(Socket clientSocket, Game gameReference, GameScreenController gameScreenControllerReference) {
         this.gameReference = gameReference;
         this.clientSocket = clientSocket;
         this.gameScreenControllerReference = gameScreenControllerReference;
