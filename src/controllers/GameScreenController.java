@@ -36,7 +36,11 @@ public class GameScreenController {
     @FXML
     private Button buttonUpLeft;
     @FXML
-    private Label messageLabel;
+    private Label labelMessage;
+    @FXML
+    private Label labelPlayerOneSeat;
+    @FXML
+    private Label labelPlayerTwoSeat;
     //grafika i wymiary
     private GraphicsContext field;
     private final int fieldUnit = 50;
@@ -70,31 +74,13 @@ public class GameScreenController {
         refreshBUttons();
         drawOldMoves();
         drawCurrentPosition();
+        setPlayerSeatsLabels();
         if (!game.isMyTurn()) {
             setmessageLabelOpponentTurn();
-            System.out.println("czekaj aż drugi gracz dolaczy!");
-            String response = Connection.readData();
-            String[] tokens = response.split("-");
-
-            for (int i = 0; i < tokens[2].length(); i++) {
-                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);
-            }
-            game.transferNewMovesToOldMoves();
-            drawEmptyField();
-            drawOldMoves();
-            drawCurrentPosition();
-
-            int status = Integer.parseInt(tokens[0]);
-
-            System.out.println("Gra Twoja kolej!");
-            game.setMyTurn(true);
-
-            refreshBUttons();
-        } else {
+            Connection.readMoves(this.game,this);
+        }else {
             setmessageLabelMyTurn();
-            refreshBUttons();
         }
-
     }
 
     //poczatek ukladu wspolrzednych w lewym gornym rogu. x rosnie w prawo, y rosnie w dol
@@ -190,8 +176,12 @@ public class GameScreenController {
         refreshBUttons();
         if (game.amIWin()) {
             System.out.println("Gratulacje, wygrales!");
+            setMessageLabelIWin();
+            refreshBUttons();
         } else if (game.amILoose() || game.amIStuck()) {
             System.out.println("Przegrales!");
+            setMessageLabelILoose();
+            refreshBUttons();
         } else if (game.isPossibleToBounce()) {
             System.out.println("Wykonaj nastepny ruch!");
         } else {
@@ -203,36 +193,7 @@ public class GameScreenController {
                             game.getGameNo() + "-" +
                             game.getGameSeatNo() + "-" +
                             game.getNewMovesAsDirections());
-            Connection.writeData(messageBuilder.toString());
-
-
-            //odpowiedz
-            String response = Connection.readData();
-            String[] tokens = response.split("-");
-
-            game.transferNewMovesToOldMoves();
-            for (int i = 0; i < tokens[2].length(); i++) {
-                game.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);
-            }
-            game.transferNewMovesToOldMoves();
-
-            drawEmptyField();
-            drawOldMoves();
-            drawNewMoves();
-            drawCurrentPosition();
-            int status = Integer.parseInt(tokens[0]);
-            if (status == -1) {
-                System.out.println("przegrales gre!");
-                game.setMyTurn(false);
-            } else if (status == 1) {
-                System.out.println("Wygrales gre!");
-                game.setMyTurn(false);
-            } else {
-                System.out.println("Gra toczy sie dalej");
-                setmessageLabelMyTurn();
-                game.setMyTurn(true);
-            }
-            refreshBUttons();
+            Connection.writeMoves(this.game,this,messageBuilder.toString());
         }
     }
 
@@ -249,6 +210,7 @@ public class GameScreenController {
         buttonUpLeft.setDisable(true);
 
         if (game.isMyTurn()) {
+            setmessageLabelMyTurn();
             if (allowedMovesDirections.direction[0]) {
                 buttonUp.setDisable(false);
             }
@@ -273,6 +235,15 @@ public class GameScreenController {
             if (allowedMovesDirections.direction[7]) {
                 buttonUpLeft.setDisable(false);
             }
+        }else{//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
+            if (game.amIWin() || game.amIStuck()){
+                setMessageLabelIWin();
+            }else if (game.amILoose()){
+                setMessageLabelILoose();
+            }else {
+                setmessageLabelMyTurn();
+            }
+
         }
 
     }
@@ -307,13 +278,37 @@ public class GameScreenController {
 
     public void drawUpLeft() {
         buttonAction(7);
-    }
+}
 
     public void setmessageLabelMyTurn(){
-        messageLabel.setText("Twój ruch!");
+        labelMessage.setTextFill(Color.BLACK);
+        labelMessage.setText("Twój ruch!");
     }
 
     public void setmessageLabelOpponentTurn(){
-        messageLabel.setText("Przeciwnik wykonuje swój ruch!");
+        labelMessage.setTextFill(Color.ORANGE);
+        labelMessage.setText("Czekaj na ruch przeciwnika!");
+    }
+
+    public void setMessageLabelIWin(){
+        labelMessage.setTextFill(Color.GREEN);
+        labelMessage.setText("Wygrałeś!");
+    }
+
+    public void setMessageLabelILoose(){
+        labelMessage.setTextFill(Color.RED);
+        labelMessage.setText("Przegrałeś!");
+    }
+
+    public void setPlayerSeatsLabels(){
+        String myGate = "Twoja bramka";
+        String opponentGate = "Bramka przeciwnika";
+        if (game.getGameSeatNo() == 0){
+            labelPlayerOneSeat.setText(myGate);
+            labelPlayerTwoSeat.setText(opponentGate);
+        }else {
+            labelPlayerOneSeat.setText(opponentGate);
+            labelPlayerTwoSeat.setText(myGate);
+        }
     }
 }

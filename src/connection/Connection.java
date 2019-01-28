@@ -1,5 +1,6 @@
 package connection;
 
+import controllers.GameScreenController;
 import engine.Game;
 
 import java.io.*;
@@ -14,6 +15,8 @@ public class Connection {
     private static int CLIENT_ID;
 
     private static Socket clientSocket;
+    public static Thread myThread;
+    public static StringBuilder stringBuilderOut;
 
 
     public Connection() {
@@ -50,28 +53,30 @@ public class Connection {
         }
     }
 
-    public static String readData() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Thread thread = new Thread(new ConnectionReadCommand(stringBuilder,clientSocket));
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("Błąd w wątku");
-        }
-        return stringBuilder.toString();
+    public static void  readData() {
+        stringBuilderOut= new StringBuilder();
+        myThread= new Thread(new ConnectionReadCommand(stringBuilderOut,clientSocket));
+        myThread.start();
+
     }
 
-    public static int writeData(String message) {
-        Thread thread = new Thread(new ConnectionWriteCommand(clientSocket,message));
-        thread.start();
+    public static void writeData(String message) {
+        myThread= new Thread(new ConnectionWriteCommand(clientSocket,message));
+        myThread.start();
+    }
+
+    public static void readMoves(Game gameReference ,GameScreenController gameScreenControllerReference){
+        myThread = new Thread(new ConnectionReadMovesCommand(clientSocket,gameReference,gameScreenControllerReference));
+        myThread.start();
+    }
+
+    public static void writeMoves(Game gameReference ,GameScreenController gameScreenControllerReference, String message){
         try {
-            thread.join();
-            return 0;
+            writeData(message);
+            myThread.join();
+            readMoves( gameReference , gameScreenControllerReference);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return -1;
         }
     }
 

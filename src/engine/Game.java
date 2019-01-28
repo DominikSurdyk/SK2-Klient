@@ -88,7 +88,7 @@ public class Game {
             allowedMoves[n + 5][11][7] = true;
         }
 
-        //gates
+        //gates-line
         for (int i1 = 3; i1 <= 5; ++i1) {
             for (int i = 0; i < 8; ++i) {
                 allowedMoves[i1][1][i] = true;
@@ -96,10 +96,25 @@ public class Game {
             }
 
         }
+        //gates-line-up-left
+        allowedMoves[3][1][0] = false;
         allowedMoves[3][1][7] = false;
+        allowedMoves[3][1][6] = false;
+
+        //gates-line-up-right
+        allowedMoves[5][1][0] = false;
         allowedMoves[5][1][1] = false;
+        allowedMoves[5][1][2] = false;
+
+        //gates-line-down-left
+        allowedMoves[3][11][4] = false;
         allowedMoves[3][11][5] = false;
-        allowedMoves[3][11][3] = false;
+        allowedMoves[3][11][6] = false;
+
+        //gates-line-down-right
+        allowedMoves[5][11][2] = false;
+        allowedMoves[5][11][3] = false;
+        allowedMoves[5][11][4] = false;
 
         //corners
         allowedMoves[0][1][3] = true;

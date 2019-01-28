@@ -35,7 +35,22 @@ public class ChooseSeatScreenController {
     @FXML
     void initialize() {
         Connection.writeData("1");
-        String response = Connection.readData();
+
+        try {
+            Connection.myThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Blad podczas wysylania danych");
+        }
+
+
+        Connection.readData();
+        String response = "";
+        try {
+            Connection.myThread.join();
+             response = Connection.stringBuilderOut.toString();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //sprawdzanie ktore przyciski sa aktywne
         if (!"fail".equals(response)) {
 
@@ -59,7 +74,21 @@ public class ChooseSeatScreenController {
                 + Connection.getClientId() + "-"
                 + (seatNumber));
 
-        String response = Connection.readData();
+        try {
+            Connection.myThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Blad podczas wysylania danych");
+        }
+
+
+        Connection.readData();
+        String response = "";
+        try {
+            Connection.myThread.join();
+            response = Connection.stringBuilderOut.toString();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (!"fail".equals(response)) {
             System.out.println("status-x(x: 1 - zaczynaj, 0 - czekaj): " + response);
             String[] tokens = response.split("-");
