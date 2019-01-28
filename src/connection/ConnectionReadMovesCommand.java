@@ -33,12 +33,12 @@ public class ConnectionReadMovesCommand implements Runnable {
 
             //tutaj testwow w tym momencie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! trzeba ustandaryzowac metode!
             int responseStatus = Integer.parseInt(tokens[0]);
-            if (responseStatus == 0){
+            if (responseStatus == 0) {
                 System.out.println("Przeiciwnik sie rozlaczyl. Wygrales!");
                 gameReference.setMyTurn(false);
             }
             int gameStatus = Integer.parseInt(tokens[1]);
-            System.out.println("Status gry: "+ gameStatus + "[0]-graj dalej, [1] - wygrales, [2]-przegrales");
+            System.out.println("Status gry: " + gameStatus + "[0]-graj dalej, [1] - wygrales, [2]-przegrales");
             if (gameStatus == -1) {
                 System.out.println("przegrales gre!");
                 gameReference.setMyTurn(false);
@@ -49,12 +49,7 @@ public class ConnectionReadMovesCommand implements Runnable {
                 System.out.println("Gra toczy sie dalej");
                 gameReference.setMyTurn(true);
             }
-
-
-            //gameReference.setMyTurn(true);
             Platform.runLater(new DrawOpponentMoves(this.gameScreenControllerReference));
-
-
         } catch (IOException e) {
             System.out.println("Nie udało się odczyta danych");
         }

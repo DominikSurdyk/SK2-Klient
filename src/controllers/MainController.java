@@ -22,7 +22,7 @@ public class MainController {
 
     }
 
-    //ustawianei ekranu menu
+    //ustawienie ekranu menu
     public void setConnectionScreen() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../fxml/ConnectionScreen.fxml"));
         Pane pane = null;

@@ -16,7 +16,6 @@ public class Game {
      * 5 - dol lewo
      * 6 - lewo
      * 7 - gora lewa
-     * <p>
      * mozliwosc ruchu - true / false
      */
 
@@ -28,7 +27,7 @@ public class Game {
     private int gameNo;
     private boolean myTurn;
 
-    public Game(int gameNo,int gameSeatNo, boolean makeFirstMove) {
+    public Game(int gameNo, int gameSeatNo, boolean makeFirstMove) {
         this.setGameNo(gameNo);
         this.setGameSeatNo(gameSeatNo);
         prepareAllowedMovesToGame(makeFirstMove);
@@ -57,35 +56,35 @@ public class Game {
         //vertical borders
         for (int m = 2; m <= 10; ++m) {
             //set left border
-            allowedMoves[0][m][1] = true;
-            allowedMoves[0][m][2] = true;
-            allowedMoves[0][m][3] = true;
+            allowedMoves[0][m][Direction.UP_RIGHT] = true;
+            allowedMoves[0][m][Direction.RIGHT] = true;
+            allowedMoves[0][m][Direction.DOWN_RIGHT] = true;
 
             //set rigt border
-            allowedMoves[8][m][5] = true;
-            allowedMoves[8][m][6] = true;
-            allowedMoves[8][m][7] = true;
+            allowedMoves[8][m][Direction.DOWN_LEFT] = true;
+            allowedMoves[8][m][Direction.LEFT] = true;
+            allowedMoves[8][m][Direction.UP_LEFT] = true;
         }
 
         //horizontal borders
         for (int n = 1; n <= 2; ++n) {
             //left-up
-            allowedMoves[n][1][3] = true;
-            allowedMoves[n][1][4] = true;
-            allowedMoves[n][1][5] = true;
+            allowedMoves[n][1][Direction.DOWN_RIGHT] = true;
+            allowedMoves[n][1][Direction.DOWN] = true;
+            allowedMoves[n][1][Direction.DOWN_LEFT] = true;
             //right-up
-            allowedMoves[n + 5][1][3] = true;
-            allowedMoves[n + 5][1][4] = true;
-            allowedMoves[n + 5][1][5] = true;
+            allowedMoves[n + 5][1][Direction.DOWN_RIGHT] = true;
+            allowedMoves[n + 5][1][Direction.DOWN] = true;
+            allowedMoves[n + 5][1][Direction.DOWN_LEFT] = true;
             //left-down
-            allowedMoves[n][11][0] = true;
-            allowedMoves[n][11][1] = true;
-            allowedMoves[n][11][7] = true;
+            allowedMoves[n][11][Direction.UP] = true;
+            allowedMoves[n][11][Direction.UP_LEFT] = true;
+            allowedMoves[n][11][Direction.UP_RIGHT] = true;
 
             //right-down
-            allowedMoves[n + 5][11][0] = true;
-            allowedMoves[n + 5][11][1] = true;
-            allowedMoves[n + 5][11][7] = true;
+            allowedMoves[n + 5][11][Direction.UP] = true;
+            allowedMoves[n + 5][11][Direction.UP_RIGHT] = true;
+            allowedMoves[n + 5][11][Direction.UP_LEFT] = true;
         }
 
         //gates-line
@@ -97,30 +96,30 @@ public class Game {
 
         }
         //gates-line-up-left
-        allowedMoves[3][1][0] = false;
-        allowedMoves[3][1][7] = false;
-        allowedMoves[3][1][6] = false;
+        allowedMoves[3][1][Direction.UP] = false;
+        allowedMoves[3][1][Direction.UP_LEFT] = false;
+        allowedMoves[3][1][Direction.LEFT] = false;
 
         //gates-line-up-right
-        allowedMoves[5][1][0] = false;
-        allowedMoves[5][1][1] = false;
-        allowedMoves[5][1][2] = false;
+        allowedMoves[5][1][Direction.UP] = false;
+        allowedMoves[5][1][Direction.UP_RIGHT] = false;
+        allowedMoves[5][1][Direction.RIGHT] = false;
 
         //gates-line-down-left
-        allowedMoves[3][11][4] = false;
-        allowedMoves[3][11][5] = false;
-        allowedMoves[3][11][6] = false;
+        allowedMoves[3][11][Direction.DOWN] = false;
+        allowedMoves[3][11][Direction.DOWN_LEFT] = false;
+        allowedMoves[3][11][Direction.LEFT] = false;
 
         //gates-line-down-right
-        allowedMoves[5][11][2] = false;
-        allowedMoves[5][11][3] = false;
-        allowedMoves[5][11][4] = false;
+        allowedMoves[5][11][Direction.RIGHT] = false;
+        allowedMoves[5][11][Direction.DOWN_RIGHT] = false;
+        allowedMoves[5][11][Direction.DOWN] = false;
 
         //corners
-        allowedMoves[0][1][3] = true;
-        allowedMoves[8][1][5] = true;
-        allowedMoves[0][11][1] = true;
-        allowedMoves[8][11][7] = true;
+        allowedMoves[0][1][Direction.DOWN_RIGHT] = true;
+        allowedMoves[8][1][Direction.DOWN_LEFT] = true;
+        allowedMoves[0][11][Direction.UP_RIGHT] = true;
+        allowedMoves[8][11][Direction.UP_LEFT] = true;
 
         //ustawienie pierwszego punktu oraz sprawienie ze sie zaczyna
         myTurn = makeFirstMove;
@@ -136,21 +135,21 @@ public class Game {
             result = -1;
         } else {
             if (deltaX == 0 && deltaY == -1) {
-                result = 0;
+                result = Direction.UP;
             } else if (deltaX == 1 && deltaY == -1) {
-                result = 1;
+                result = Direction.UP_RIGHT;
             } else if (deltaX == 1 && deltaY == 0) {
-                result = 2;
+                result = Direction.RIGHT;
             } else if (deltaX == 1 && deltaY == 1) {
-                result = 3;
+                result = Direction.DOWN_RIGHT;
             } else if (deltaX == 0 && deltaY == 1) {
-                result = 4;
+                result = Direction.DOWN;
             } else if (deltaX == -1 && deltaY == 1) {
-                result = 5;
+                result = Direction.DOWN_LEFT;
             } else if (deltaX == -1 && deltaY == 0) {
-                result = 6;
+                result = Direction.LEFT;
             } else if (deltaX == -1 && deltaY == -1) {
-                result = 7;
+                result = Direction.UP_LEFT;
             }
         }
         return result;
@@ -208,7 +207,7 @@ public class Game {
     }
 
 
-    public void addNewMove(Point point,boolean isThisMyMove) {
+    public void addNewMove(Point point, boolean isThisMyMove) {
         int direction;
         int oppositeDirection;
         Point lastPoint;
@@ -224,15 +223,10 @@ public class Game {
 
         setMovePermission(lastPoint, direction, false);
         setMovePermission(point, oppositeDirection, false);
-        if (isThisMyMove){
-//            if ((!amILoose() || !amIWin() || !amIStuck()) && isPossibleToBounce()){
-//                myTurn = true;
-//            }else{
-//                myTurn = false;
-//            }
+        if (isThisMyMove) {
             if (amILoose() || amIWin() || amIStuck() || !isPossibleToBounce()) {
                 myTurn = false;
-            }else{
+            } else {
                 myTurn = true;
             }
 
@@ -253,33 +247,32 @@ public class Game {
 
     }
 
-    public void executeMove(int direction,boolean isThisMyMove) {
-        if (direction == 0) {
-            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() - 1),isThisMyMove);
+    public void executeMove(int direction, boolean isThisMyMove) {
+        if (direction == Direction.UP) {
+            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() - 1), isThisMyMove);
         }
-        if (direction == 1) {
-            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() - 1),isThisMyMove);
+        if (direction == Direction.UP_RIGHT) {
+            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() - 1), isThisMyMove);
         }
-        if (direction == 2) {
-            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY()),isThisMyMove);
+        if (direction == Direction.RIGHT) {
+            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY()), isThisMyMove);
         }
-        if (direction == 3) {
-            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() + 1),isThisMyMove);
+        if (direction == Direction.DOWN_RIGHT) {
+            addNewMove(new Point(currentPosition.getX() + 1, currentPosition.getY() + 1), isThisMyMove);
         }
-        if (direction == 4) {
-            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() + 1),isThisMyMove);
+        if (direction == Direction.DOWN) {
+            addNewMove(new Point(currentPosition.getX(), currentPosition.getY() + 1), isThisMyMove);
         }
-        if (direction == 5) {
-            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() + 1),isThisMyMove);
+        if (direction == Direction.DOWN_LEFT) {
+            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() + 1), isThisMyMove);
         }
-        if (direction == 6) {
-            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY()),isThisMyMove);
+        if (direction == Direction.LEFT) {
+            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY()), isThisMyMove);
         }
-        if (direction == 7) {
-            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() - 1),isThisMyMove);
+        if (direction == Direction.UP_LEFT) {
+            addNewMove(new Point(currentPosition.getX() - 1, currentPosition.getY() - 1), isThisMyMove);
         }
     }
-
 
     public Point getCurrentPosition() {
         return currentPosition;
@@ -300,7 +293,6 @@ public class Game {
     public void deleteNewMoves() {
         newMoves.clear();
     }
-
 
     //0 - wygral gracz z miejsca 0. 1 - wygral gracz z miejsca 1. -1  - nikt nie wygral
     private int isSomeoneWin() {
@@ -346,20 +338,20 @@ public class Game {
         return result;
     }
 
-    public String getNewMovesAsDirections(){
+    public String getNewMovesAsDirections() {
         StringBuilder responseBuilder = new StringBuilder();
-        Point lastPoint = oldMoves.get(oldMoves.size()-1);
+        Point lastPoint = oldMoves.get(oldMoves.size() - 1);
         Point newPoint = newMoves.get(0);
 
-        int direction = getMoveDirectionBetweenTwoPoints(lastPoint,newPoint);
+        int direction = getMoveDirectionBetweenTwoPoints(lastPoint, newPoint);
 
         responseBuilder.append(direction);
 
-        if (newMoves.size() > 1){
-            for (int i = 1; i < newMoves.size(); i++){
-                lastPoint = newMoves.get(i-1);
+        if (newMoves.size() > 1) {
+            for (int i = 1; i < newMoves.size(); i++) {
+                lastPoint = newMoves.get(i - 1);
                 newPoint = newMoves.get(i);
-                direction = getMoveDirectionBetweenTwoPoints(lastPoint,newPoint);
+                direction = getMoveDirectionBetweenTwoPoints(lastPoint, newPoint);
                 responseBuilder.append(direction);
             }
         }
@@ -383,8 +375,8 @@ public class Game {
         this.gameNo = gameNo;
     }
 
-    public void transferNewMovesToOldMoves(){
-        for (Point point: newMoves) {
+    public void transferNewMovesToOldMoves() {
+        for (Point point : newMoves) {
             addOldMove(point);
         }
         newMoves.clear();

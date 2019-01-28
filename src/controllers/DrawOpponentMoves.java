@@ -3,6 +3,7 @@ package controllers;
 public class DrawOpponentMoves implements Runnable {
 
     GameScreenController gameScreenControllerReference;
+
     @Override
     public void run() {
         gameScreenControllerReference.drawEmptyField();
@@ -12,7 +13,7 @@ public class DrawOpponentMoves implements Runnable {
 
     }
 
-    public DrawOpponentMoves(GameScreenController gameScreenControllerReference){
-     this.gameScreenControllerReference = gameScreenControllerReference;
+    public DrawOpponentMoves(GameScreenController gameScreenControllerReference) {
+        this.gameScreenControllerReference = gameScreenControllerReference;
     }
 }

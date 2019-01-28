@@ -1,10 +1,7 @@
 package controllers;
 
 import connection.Connection;
-import engine.AllowedMovesDirections;
-import engine.Game;
-import engine.Model;
-import engine.Point;
+import engine.*;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -64,9 +61,6 @@ public class GameScreenController {
         this.mainController = mainController;
     }
 
-    public void BoiskoScreenController() {
-    }
-
     public void initialize() {
         this.game = Model.getGame();
         field = canvas.getGraphicsContext2D();
@@ -77,8 +71,8 @@ public class GameScreenController {
         setPlayerSeatsLabels();
         if (!game.isMyTurn()) {
             setmessageLabelOpponentTurn();
-            Connection.readMoves(this.game,this);
-        }else {
+            Connection.readMoves(this.game, this);
+        } else {
             setmessageLabelMyTurn();
         }
     }
@@ -193,7 +187,7 @@ public class GameScreenController {
                             game.getGameNo() + "-" +
                             game.getGameSeatNo() + "-" +
                             game.getNewMovesAsDirections());
-            Connection.writeMoves(this.game,this,messageBuilder.toString());
+            Connection.writeMoves(this.game, this, messageBuilder.toString());
         }
     }
 
@@ -211,36 +205,36 @@ public class GameScreenController {
 
         if (game.isMyTurn()) {
             setmessageLabelMyTurn();
-            if (allowedMovesDirections.direction[0]) {
+            if (allowedMovesDirections.direction[Direction.UP]) {
                 buttonUp.setDisable(false);
             }
-            if (allowedMovesDirections.direction[1]) {
+            if (allowedMovesDirections.direction[Direction.UP_RIGHT]) {
                 buttonUpRight.setDisable(false);
             }
-            if (allowedMovesDirections.direction[2]) {
+            if (allowedMovesDirections.direction[Direction.RIGHT]) {
                 buttonRight.setDisable(false);
             }
-            if (allowedMovesDirections.direction[3]) {
+            if (allowedMovesDirections.direction[Direction.DOWN_RIGHT]) {
                 buttonDownRight.setDisable(false);
             }
-            if (allowedMovesDirections.direction[4]) {
+            if (allowedMovesDirections.direction[Direction.DOWN]) {
                 buttonDown.setDisable(false);
             }
-            if (allowedMovesDirections.direction[5]) {
+            if (allowedMovesDirections.direction[Direction.DOWN_LEFT]) {
                 buttonDownLeft.setDisable(false);
             }
-            if (allowedMovesDirections.direction[6]) {
+            if (allowedMovesDirections.direction[Direction.LEFT]) {
                 buttonLeft.setDisable(false);
             }
-            if (allowedMovesDirections.direction[7]) {
+            if (allowedMovesDirections.direction[Direction.UP_LEFT]) {
                 buttonUpLeft.setDisable(false);
             }
-        }else{//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
-            if (game.amIWin() ){
+        } else {//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
+            if (game.amIWin()) {
                 setMessageLabelIWin();
-            }else if (game.amILoose()){
+            } else if (game.amILoose()) {
                 setMessageLabelILoose();
-            }else {
+            } else {
                 setmessageLabelMyTurn();
             }
 
@@ -249,64 +243,64 @@ public class GameScreenController {
     }
 
     public void drawUp() {
-        buttonAction(0);
+        buttonAction(Direction.UP);
     }
 
     public void drawUpRight() {
-        buttonAction(1);
+        buttonAction(Direction.UP_RIGHT);
     }
 
     public void drawRight() {
-        buttonAction(2);
+        buttonAction(Direction.RIGHT);
     }
 
     public void drawDownRight() {
-        buttonAction(3);
+        buttonAction(Direction.DOWN_RIGHT);
     }
 
     public void drawDown() {
-        buttonAction(4);
+        buttonAction(Direction.DOWN);
     }
 
     public void drawDownLeft() {
-        buttonAction(5);
+        buttonAction(Direction.DOWN_LEFT);
     }
 
     public void drawLeft() {
-        buttonAction(6);
+        buttonAction(Direction.LEFT);
     }
 
     public void drawUpLeft() {
-        buttonAction(7);
-}
+        buttonAction(Direction.UP_LEFT);
+    }
 
-    public void setmessageLabelMyTurn(){
+    public void setmessageLabelMyTurn() {
         labelMessage.setTextFill(Color.BLACK);
         labelMessage.setText("Twój ruch!");
     }
 
-    public void setmessageLabelOpponentTurn(){
+    public void setmessageLabelOpponentTurn() {
         labelMessage.setTextFill(Color.ORANGE);
         labelMessage.setText("Czekaj na ruch przeciwnika!");
     }
 
-    public void setMessageLabelIWin(){
+    public void setMessageLabelIWin() {
         labelMessage.setTextFill(Color.GREEN);
         labelMessage.setText("Wygrałeś!");
     }
 
-    public void setMessageLabelILoose(){
+    public void setMessageLabelILoose() {
         labelMessage.setTextFill(Color.RED);
         labelMessage.setText("Przegrałeś!");
     }
 
-    public void setPlayerSeatsLabels(){
+    public void setPlayerSeatsLabels() {
         String myGate = "Twoja bramka";
         String opponentGate = "Bramka przeciwnika";
-        if (game.getGameSeatNo() == 0){
+        if (game.getGameSeatNo() == 0) {
             labelPlayerOneSeat.setText(myGate);
             labelPlayerTwoSeat.setText(opponentGate);
-        }else {
+        } else {
             labelPlayerOneSeat.setText(opponentGate);
             labelPlayerTwoSeat.setText(myGate);
         }
