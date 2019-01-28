@@ -168,7 +168,11 @@ public class GameScreenController {
         drawNewMoves();
         drawCurrentPosition();
         refreshBUttons();
-        if (game.amIWin()) {
+
+        if (!game.amIStuck() && !game.amILoose() && !game.amIWin() && game.isPossibleToBounce()){
+            System.out.println("Wykonaj następny ruch!");
+        }else {
+            if (game.amIWin()) {
             System.out.println("Gratulacje, wygrałes!");
             setMessageLabelIWin();
             refreshBUttons();
@@ -176,11 +180,11 @@ public class GameScreenController {
             System.out.println("Przegrałes!");
             setMessageLabelILoose();
             refreshBUttons();
-        } else if (game.isPossibleToBounce()) {
-            System.out.println("Wykonaj następny ruch!");
         } else {
             setmessageLabelOpponentTurn();
             System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
+            refreshBUttons();
+        }
             StringBuilder messageBuilder =
                     new StringBuilder("3-" +
                             Connection.getClientId() + "-" +
@@ -189,6 +193,27 @@ public class GameScreenController {
                             game.getNewMovesAsDirections());
             Connection.writeMoves(this.game, this, messageBuilder.toString());
         }
+//        if (game.amIWin()) {
+//            System.out.println("Gratulacje, wygrałes!");
+//            setMessageLabelIWin();
+//            refreshBUttons();
+//        } else if (game.amILoose() || game.amIStuck()) {
+//            System.out.println("Przegrałes!");
+//            setMessageLabelILoose();
+//            refreshBUttons();
+//        } else if (game.isPossibleToBounce()) {
+//
+//        } else {
+//            setmessageLabelOpponentTurn();
+//            System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
+//            StringBuilder messageBuilder =
+//                    new StringBuilder("3-" +
+//                            Connection.getClientId() + "-" +
+//                            game.getGameNo() + "-" +
+//                            game.getGameSeatNo() + "-" +
+//                            game.getNewMovesAsDirections());
+//            Connection.writeMoves(this.game, this, messageBuilder.toString());
+//        }
     }
 
     public void refreshBUttons() {
