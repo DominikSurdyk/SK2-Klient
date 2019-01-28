@@ -28,7 +28,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="messageLabel" layoutX="22.0" layoutY="34.0" prefHeight="36.0" prefWidth="758.0" textFill="RED">
+      <Label fx:id="messageLabel" alignment="CENTER" layoutX="22.0" layoutY="34.0" prefHeight="36.0" prefWidth="758.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="17.0" />
          </font></Label>

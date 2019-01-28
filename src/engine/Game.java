@@ -225,11 +225,17 @@ public class Game {
         setMovePermission(lastPoint, direction, false);
         setMovePermission(point, oppositeDirection, false);
         if (isThisMyMove){
-            if ((!amILoose() || !amIWin() || !amIStuck()) && isPossibleToBounce()){
-                myTurn = true;
-            }else{
+//            if ((!amILoose() || !amIWin() || !amIStuck()) && isPossibleToBounce()){
+//                myTurn = true;
+//            }else{
+//                myTurn = false;
+//            }
+            if (amILoose() || amIWin() || amIStuck() || !isPossibleToBounce()) {
                 myTurn = false;
+            }else{
+                myTurn = true;
             }
+
             System.out.print("Poprzedni Punkt: " + lastPoint.getX() + "," + lastPoint.getY() + ". Możliwe kierunki po wykonaniu ruchu: ");
             for (int p = 0; p < 8; p++) {
                 if (allowedMoves[lastPoint.getX()][lastPoint.getY()][p]) {
@@ -296,9 +302,9 @@ public class Game {
     }
 
 
-    //0 - wygral gracz z miejsca 0. 1 - wygral gracz z miejsca 1. 2  - nikt nie wygral
+    //0 - wygral gracz z miejsca 0. 1 - wygral gracz z miejsca 1. -1  - nikt nie wygral
     private int isSomeoneWin() {
-        int result = 2;
+        int result = -1;
         if (currentPosition.getY() == 12 && (
                 currentPosition.getX() == 3 ||
                         currentPosition.getX() == 4 ||

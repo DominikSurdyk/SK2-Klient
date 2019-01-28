@@ -236,7 +236,7 @@ public class GameScreenController {
                 buttonUpLeft.setDisable(false);
             }
         }else{//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
-            if (game.amIWin() || game.amIStuck()){
+            if (game.amIWin() ){
                 setMessageLabelIWin();
             }else if (game.amILoose()){
                 setMessageLabelILoose();
