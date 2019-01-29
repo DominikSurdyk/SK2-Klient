@@ -26,6 +26,8 @@ public class Game {
     private int gameSeatNo;
     private int gameNo;
     private boolean myTurn;
+    //potrzebne do odświeżania przyciskow  przy zakleszczeniu by wiedzieć ckto zakleszczył
+    private boolean itWasMyMove;
 
     public Game(int gameNo, int gameSeatNo, boolean makeFirstMove) {
         this.setGameNo(gameNo);
@@ -240,6 +242,9 @@ public class Game {
                 }
             }
             System.out.print("\n");
+            itWasMyMove =true;
+        }else{
+            itWasMyMove = false;
         }
 
     }
@@ -373,5 +378,9 @@ public class Game {
             addOldMove(point);
         }
         newMoves.clear();
+    }
+
+    public boolean getItWasMyMove() {
+        return itWasMyMove;
     }
 }

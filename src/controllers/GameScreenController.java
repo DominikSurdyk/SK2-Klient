@@ -254,10 +254,10 @@ public class GameScreenController {
             if (allowedMovesDirections.direction[Direction.UP_LEFT]) {
                 buttonUpLeft.setDisable(false);
             }
-        } else {//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
-            if (game.amIWin()) {
+        } else {
+            if (game.amIWin() || (game.amIStuck() && !game.getItWasMyMove())) {
                 setMessageLabelIWin();
-            } else if (game.amILoose()) {
+            } else if (game.amILoose() || (game.amIStuck() && game.getItWasMyMove())) {//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
                 setMessageLabelILoose();
             } else {
                 setmessageLabelMyTurn();
