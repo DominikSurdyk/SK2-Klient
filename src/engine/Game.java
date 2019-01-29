@@ -378,6 +378,7 @@ public class Game {
             addOldMove(point);
         }
         newMoves.clear();
+        itWasMyMove = false;
     }
 
     public boolean getItWasMyMove() {
