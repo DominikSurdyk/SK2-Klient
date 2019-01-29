@@ -1,6 +1,7 @@
 package connection.commands;
 
 import controllers.GameScreenController;
+import controllers.GuiCommands.DrawOpponentDisconnected;
 import controllers.GuiCommands.DrawOpponentMoves;
 import engine.Game;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ public class CommandReadResponseFromServer implements Runnable {
             if (responseStatus == 0) {
                 System.out.println("Przeciwnik się rozłączył. Wygrałeś");
                 gameReference.setMyTurn(false);
+                Platform.runLater(new DrawOpponentDisconnected(this.gameScreenControllerReference));
             } else {
                 for (int i = 0; i < tokens[2].length(); i++) {
                     gameReference.executeMove(Character.getNumericValue(tokens[2].charAt(i)), false);

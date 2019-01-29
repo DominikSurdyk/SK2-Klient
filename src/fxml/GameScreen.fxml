@@ -9,14 +9,14 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameScreenController">
    <children>
       <Canvas fx:id="canvas" height="700.0" layoutX="142.0" layoutY="100.0" width="600.0" />
-      <Button fx:id="buttonUpLeft" disable="true" layoutX="790.0" layoutY="250.0" mnemonicParsing="false" onAction="#drawUpLeft" text="Góra-lewo" />
-      <Button fx:id="buttonUp" disable="true" layoutX="882.0" layoutY="250.0" mnemonicParsing="false" onAction="#drawUp" text="Góra" />
-      <Button fx:id="buttonUpRight" disable="true" layoutX="934.0" layoutY="250.0" mnemonicParsing="false" onAction="#drawUpRight" text="Góra-prawo" />
-      <Button fx:id="buttonRight" disable="true" layoutX="964.0" layoutY="304.0" mnemonicParsing="false" onAction="#drawRight" text="Prawo" />
-      <Button fx:id="buttonDownRight" disable="true" layoutX="940.0" layoutY="366.0" mnemonicParsing="false" onAction="#drawDownRight" text="Dół-prawo" />
-      <Button fx:id="buttonDown" disable="true" layoutX="875.0" layoutY="366.0" mnemonicParsing="false" onAction="#drawDown" text="Dół" />
-      <Button fx:id="buttonDownLeft" disable="true" layoutX="790.0" layoutY="366.0" mnemonicParsing="false" onAction="#drawDownLeft" text="Dół-lewo" />
-      <Button fx:id="buttonLeft" disable="true" layoutX="790.0" layoutY="304.0" mnemonicParsing="false" onAction="#drawLeft" text="Lewo" />
+      <Button fx:id="buttonUpLeft" disable="true" layoutX="757.0" layoutY="250.0" mnemonicParsing="false" onAction="#drawUpLeft" prefHeight="100.0" prefWidth="100.0" text="Góra-lewo" />
+      <Button fx:id="buttonUp" disable="true" layoutX="857.0" layoutY="250.0" mnemonicParsing="false" onAction="#drawUp" prefHeight="100.0" prefWidth="100.0" text="Góra" />
+      <Button fx:id="buttonUpRight" disable="true" layoutX="957.0" layoutY="250.0" mnemonicParsing="false" onAction="#drawUpRight" prefHeight="100.0" prefWidth="100.0" text="Góra-prawo" />
+      <Button fx:id="buttonRight" disable="true" layoutX="957.0" layoutY="350.0" mnemonicParsing="false" onAction="#drawRight" prefHeight="100.0" prefWidth="100.0" text="Prawo" />
+      <Button fx:id="buttonDownRight" disable="true" layoutX="957.0" layoutY="450.0" mnemonicParsing="false" onAction="#drawDownRight" prefHeight="100.0" prefWidth="100.0" text="Dół-prawo" />
+      <Button fx:id="buttonDown" disable="true" layoutX="857.0" layoutY="450.0" mnemonicParsing="false" onAction="#drawDown" prefHeight="100.0" prefWidth="100.0" text="Dół" />
+      <Button fx:id="buttonDownLeft" disable="true" layoutX="757.0" layoutY="450.0" mnemonicParsing="false" onAction="#drawDownLeft" prefHeight="100.0" prefWidth="100.0" text="Dół-lewo" />
+      <Button fx:id="buttonLeft" disable="true" layoutX="757.0" layoutY="350.0" mnemonicParsing="false" onAction="#drawLeft" prefHeight="100.0" prefWidth="100.0" text="Lewo" />
       <Label fx:id="labelMessage" alignment="CENTER" layoutX="757.0" layoutY="148.0" prefHeight="65.0" prefWidth="307.0">
          <font>
             <Font size="17.0" />
@@ -32,5 +32,6 @@
             <Font size="17.0" />
          </font>
       </Label>
+      <Button fx:id="buttonExit" disable="true" layoutX="757.0" layoutY="774.0" mnemonicParsing="false" onAction="#goToChooseSeatScreen" prefHeight="26.0" prefWidth="300.0" text="Wyjdź" />
    </children>
 </Pane>

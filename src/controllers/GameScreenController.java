@@ -3,11 +3,15 @@ package controllers;
 import connection.Connection;
 import engine.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
+import java.io.IOException;
 
 
 public class GameScreenController {
@@ -38,6 +42,8 @@ public class GameScreenController {
     private Label labelPlayerOneSeat;
     @FXML
     private Label labelPlayerTwoSeat;
+    @FXML
+    private Button buttonExit;
     //grafika i wymiary
     private GraphicsContext field;
     private final int fieldUnit = 50;
@@ -237,8 +243,10 @@ public class GameScreenController {
         } else {
             if (game.amIWin() || (game.amIStuck() && !game.getItWasMyMove())) {
                 setMessageLabelIWin();
+                setEnableExitBUtton();
             } else if (game.amILoose() || (game.amIStuck() && game.getItWasMyMove())) {//sprawdzam czy amIStuck() także ponieważ mogl sie przeciwnik zaklinować
                 setMessageLabelILoose();
+                setEnableExitBUtton();
             } else {
                 setmessageLabelMyTurn();
             }
@@ -254,31 +262,43 @@ public class GameScreenController {
     public void drawUpRight() {
         buttonAction(Direction.UP_RIGHT);
     }
-
+    @FXML
     public void drawRight() {
         buttonAction(Direction.RIGHT);
     }
-
+    @FXML
     public void drawDownRight() {
         buttonAction(Direction.DOWN_RIGHT);
     }
-
+    @FXML
     public void drawDown() {
         buttonAction(Direction.DOWN);
     }
-
+    @FXML
     public void drawDownLeft() {
         buttonAction(Direction.DOWN_LEFT);
     }
-
+    @FXML
     public void drawLeft() {
         buttonAction(Direction.LEFT);
     }
-
+    @FXML
     public void drawUpLeft() {
         buttonAction(Direction.UP_LEFT);
     }
-
+    @FXML
+    public void goToChooseSeatScreen(){
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../fxml/ChooseSeatScreen.fxml"));
+        Pane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ChooseSeatScreenController chooseSeatScreenController = loader.getController();
+        chooseSeatScreenController.setMainController(this.getMainController());
+        mainController.setPane(pane);
+    }
     public void setmessageLabelMyTurn() {
         labelMessage.setTextFill(Color.BLACK);
         labelMessage.setText("Twój ruch!");
@@ -299,6 +319,11 @@ public class GameScreenController {
         labelMessage.setText("Przegrałeś!");
     }
 
+    public void setMessageLabelOpponentDisconected(){
+        labelMessage.setTextFill(Color.BLUE);
+        labelMessage.setText("Przeciwnik się rozłączył! Koniec gry");
+    }
+
     public void setPlayerSeatsLabels() {
         String myGate = "Twoja bramka";
         String opponentGate = "Bramka przeciwnika";
@@ -309,5 +334,9 @@ public class GameScreenController {
             labelPlayerOneSeat.setText(opponentGate);
             labelPlayerTwoSeat.setText(myGate);
         }
+    }
+
+    public void setEnableExitBUtton(){
+        buttonExit.setDisable(false);
     }
 }

@@ -34,39 +34,73 @@ public class ChooseSeatScreenController {
 
     @FXML
     void initialize() {
-        Connection.writeData("1");
+        if (Connection.getClientId() < 0 ){
+            Connection.writeData("1");
 
-        try {
-            Connection.myThread.join();
-        } catch (InterruptedException e) {
-            System.out.println("Blad podczas wysylania danych");
-        }
-
-
-        Connection.readData();
-        String response = "";
-        try {
-            Connection.myThread.join();
-             response = Connection.stringBuilderOut.toString();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //sprawdzanie ktore przyciski sa aktywne
-        if (!"fail".equals(response)) {
-
-            System.out.println("status-ID-xxxxxx(0-Wolne, 1-Zajete): " + response);
-            String[] tokens = response.split("-");
-            int myId = Integer.parseInt(tokens[1]);
-            Connection.setClientId(myId);
-            char seatStatus;
-            for (int i = 0; i < PLAYER_SEATS; i++) {
-                seatStatus = tokens[2].charAt(i);
-                seatStatusArray[i] = Character.getNumericValue(seatStatus);
+            try {
+                Connection.myThread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Blad podczas wysylania danych");
             }
-            updateSeatStatusArray();
-        } else {
-            System.out.println("Nie można pobrać ID, oraz wolnych stołów!");
+
+
+            Connection.readData();
+            String response = "";
+            try {
+                Connection.myThread.join();
+                response = Connection.stringBuilderOut.toString();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //sprawdzanie ktore przyciski sa aktywne
+            if (!"fail".equals(response)) {
+
+                System.out.println("status-ID-xxxxxx(0-Wolne, 1-Zajete): " + response);
+                String[] tokens = response.split("-");
+                int myId = Integer.parseInt(tokens[1]);
+                Connection.setClientId(myId);
+                char seatStatus;
+                for (int i = 0; i < PLAYER_SEATS; i++) {
+                    seatStatus = tokens[2].charAt(i);
+                    seatStatusArray[i] = Character.getNumericValue(seatStatus);
+                }
+                updateSeatStatusArray();
+            } else {
+                System.out.println("Nie można pobrać ID, oraz wolnych stołów!");
+            }
+        }else {
+            Connection.writeData("4");
+            try {
+                Connection.myThread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Blad podczas wysylania danych");
+            }
+
+
+            Connection.readData();
+            String response = "";
+            try {
+                Connection.myThread.join();
+                response = Connection.stringBuilderOut.toString();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //sprawdzanie ktore przyciski sa aktywne
+            if (!"fail".equals(response)) {
+
+                System.out.println("status-xxxxxx(0-Wolne, 1-Zajete): " + response);
+                String[] tokens = response.split("-");
+                char seatStatus;
+                for (int i = 0; i < PLAYER_SEATS; i++) {
+                    seatStatus = tokens[1].charAt(i);
+                    seatStatusArray[i] = Character.getNumericValue(seatStatus);
+                }
+                updateSeatStatusArray();
+            } else {
+                System.out.println("Nie można pobrać wolnych stołów");
+            }
         }
+
     }
 
     private void buttonAction(int seatNumber) {

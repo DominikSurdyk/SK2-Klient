@@ -15,7 +15,7 @@ public class Connection {
 
     private static String SERVER_IP_ADDRESS_DEFAULT = "localhost";
     private static int SERVER_PORT_DEFAULT = 1234;
-    private static int CLIENT_ID;
+    private static int CLIENT_ID = -1;
 
     private static Socket clientSocket;
     public static Thread myThread;
