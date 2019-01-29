@@ -169,51 +169,31 @@ public class GameScreenController {
         drawCurrentPosition();
         refreshBUttons();
 
-        if (!game.amIStuck() && !game.amILoose() && !game.amIWin() && game.isPossibleToBounce()){
+        boolean waitForServerResponse = true;
+        if (!game.amIStuck() && !game.amILoose() && !game.amIWin() && game.isPossibleToBounce()) {
             System.out.println("Wykonaj następny ruch!");
-        }else {
-            if (game.amIWin()) {
-            System.out.println("Gratulacje, wygrałes!");
-            setMessageLabelIWin();
-            refreshBUttons();
-        } else if (game.amILoose() || game.amIStuck()) {
-            System.out.println("Przegrałes!");
-            setMessageLabelILoose();
-            refreshBUttons();
         } else {
-            setmessageLabelOpponentTurn();
-            System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
-            refreshBUttons();
-        }
+            if (game.amIWin()) {
+                System.out.println("Gratulacje, wygrałes!");
+                waitForServerResponse = false;
+                setMessageLabelIWin();
+
+            } else if (game.amILoose() || game.amIStuck()) {
+                System.out.println("Przegrałes!");
+                waitForServerResponse = false;
+                setMessageLabelILoose();
+            } else {
+                setmessageLabelOpponentTurn();
+                System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
+            }
             StringBuilder messageBuilder =
                     new StringBuilder("3-" +
                             Connection.getClientId() + "-" +
                             game.getGameNo() + "-" +
                             game.getGameSeatNo() + "-" +
                             game.getNewMovesAsDirections());
-            Connection.writeMoves(this.game, this, messageBuilder.toString());
+            Connection.writeMoves(this.game, this, messageBuilder.toString(),waitForServerResponse);
         }
-//        if (game.amIWin()) {
-//            System.out.println("Gratulacje, wygrałes!");
-//            setMessageLabelIWin();
-//            refreshBUttons();
-//        } else if (game.amILoose() || game.amIStuck()) {
-//            System.out.println("Przegrałes!");
-//            setMessageLabelILoose();
-//            refreshBUttons();
-//        } else if (game.isPossibleToBounce()) {
-//
-//        } else {
-//            setmessageLabelOpponentTurn();
-//            System.out.println("Wykonałeś swoje ruchy, czekaj na przeciwnika");
-//            StringBuilder messageBuilder =
-//                    new StringBuilder("3-" +
-//                            Connection.getClientId() + "-" +
-//                            game.getGameNo() + "-" +
-//                            game.getGameSeatNo() + "-" +
-//                            game.getNewMovesAsDirections());
-//            Connection.writeMoves(this.game, this, messageBuilder.toString());
-//        }
     }
 
     public void refreshBUttons() {

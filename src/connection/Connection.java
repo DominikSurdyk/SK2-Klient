@@ -69,11 +69,13 @@ public class Connection {
         myThread.start();
     }
 
-    public static void writeMoves(Game gameReference ,GameScreenController gameScreenControllerReference, String message){
+    public static void writeMoves(Game gameReference ,GameScreenController gameScreenControllerReference, String message, boolean waitForResponse){
         try {
             writeData(message);
             myThread.join();
-            readMoves( gameReference , gameScreenControllerReference);
+            if (waitForResponse){
+                readMoves( gameReference , gameScreenControllerReference);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

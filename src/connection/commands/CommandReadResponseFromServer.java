@@ -36,7 +36,7 @@ public class CommandReadResponseFromServer implements Runnable {
                 gameReference.transferNewMovesToOldMoves();
                 int gameStatus = Integer.parseInt(tokens[1]);
                 System.out.println("Status gry: " + gameStatus + ". [0] - graj dalej, [1] - wygrałeś, [2]-przegrałeś");
-                if (gameStatus == -1) {
+                if (gameStatus == 2) {
                     System.out.println("Przegrałeś!");
                     gameReference.setMyTurn(false);
                 } else if (gameStatus == 1) {
