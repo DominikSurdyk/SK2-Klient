@@ -1,4 +1,4 @@
-package controllers.GuiCommands;
+package controllers.guiCommands;
 
 import controllers.GameScreenController;
 

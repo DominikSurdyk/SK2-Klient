@@ -40,7 +40,7 @@ public class ChooseSeatScreenController {
             try {
                 Connection.myThread.join();
             } catch (InterruptedException e) {
-                System.out.println("Blad podczas wysylania danych");
+                System.out.println("Błąd podczas inicjalizowania ChooseSeatController!");
             }
 
 
@@ -50,7 +50,7 @@ public class ChooseSeatScreenController {
                 Connection.myThread.join();
                 response = Connection.stringBuilderOut.toString();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Błąd podczas inicjalizowania ChooseSeatController!");
             }
             //sprawdzanie ktore przyciski sa aktywne
             if (!"fail".equals(response)) {
@@ -73,7 +73,7 @@ public class ChooseSeatScreenController {
             try {
                 Connection.myThread.join();
             } catch (InterruptedException e) {
-                System.out.println("Blad podczas wysylania danych");
+                System.out.println("Błąd podczas inicjalizowania ChooseSeatController! Wysylanie");
             }
 
 
@@ -83,7 +83,7 @@ public class ChooseSeatScreenController {
                 Connection.myThread.join();
                 response = Connection.stringBuilderOut.toString();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Błąd podczas inicjalizowania ChooseSeatController!");
             }
             //sprawdzanie ktore przyciski sa aktywne
             if (!"fail".equals(response)) {
@@ -97,7 +97,7 @@ public class ChooseSeatScreenController {
                 }
                 updateSeatStatusArray();
             } else {
-                System.out.println("Nie można pobrać wolnych stołów");
+                System.out.println("Błąd podczas inicjalizowania ChooseSeatController!");
             }
         }
 

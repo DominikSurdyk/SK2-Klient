@@ -1,8 +1,8 @@
 package connection.commands;
 
 import controllers.GameScreenController;
-import controllers.GuiCommands.DrawOpponentDisconnected;
-import controllers.GuiCommands.DrawOpponentMoves;
+import controllers.guiCommands.DrawOpponentDisconnected;
+import controllers.guiCommands.DrawOpponentMoves;
 import engine.Game;
 import javafx.application.Platform;
 
